@@ -46,6 +46,7 @@ Este arquivo orienta quem desenvolver o mod em `/home/desodre/Projects/lunar_awa
 4. Mantenha o sorteio estável para a mesma semente e dia. Se adicionar estado persistente, use o mecanismo apropriado de [Saved Data](https://docs.fabricmc.net/develop/serialization/saved-data) e defina migração de dados.
 5. O aumento de 25% aplica-se ao **limite global e local** de `MONSTER`: 70 → 88 com arredondamento. Não descreva isso como garantia de 25% mais criaturas geradas; o resultado depende das demais regras de spawn.
 6. Atualize `README.md`, textos `pt_br.json` e `en_us.json`, metadados e versão sempre que uma mudança visível para o jogador os afetar.
+7. Preserve a silhueta **quadrada** do Sol durante o eclipse. O sprite e a sombra central devem ter bordas retas e cantos quadrados, como o Sol original do Minecraft; não substitua por um disco ou coroa circular.
 
 ## Verificação e entrega
 
@@ -59,4 +60,4 @@ Este arquivo orienta quem desenvolver o mod em `/home/desodre/Projects/lunar_awa
 ## Estado conhecido
 
 - A versão 0.1.1 corrige o `IllegalClassLoadError` causado pelas classes auxiliares dentro do pacote de mixins na versão 0.1.0.
-- `./gradlew clean build` passou para 0.1.2. Essa versão acrescenta o Sol eclipsado, a Lua vermelha e o ajuste de horário. Ainda falta verificar visualmente os astros e os comandos em um mundo jogável.
+- `./gradlew clean build` passou para 0.1.3. Essa versão mantém o Sol quadrado durante o eclipse. Ainda falta verificar visualmente os astros e os comandos em um mundo jogável.

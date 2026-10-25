@@ -1,12 +1,12 @@
-"""Draw a compact, transparent solar-eclipse sprite for Minecraft's celestial atlas."""
+"""Draw a square solar eclipse matching Minecraft's square sun silhouette."""
 
-from math import atan2, cos, exp, hypot, pi
+from math import exp
 from pathlib import Path
 from struct import pack
 from zlib import compress, crc32
 
 
-SIZE = 64
+SIZE = 32
 MID = (SIZE - 1) / 2
 OUTPUT = (
     Path(__file__).resolve().parents[1]
@@ -22,29 +22,17 @@ pixels = bytearray()
 for y in range(SIZE):
     pixels.append(0)  # PNG filter: none
     for x in range(SIZE):
-        dx, dy = x - MID, y - MID
-        r = hypot(dx, dy)
-        angle = atan2(dy, dx)
-        rays = max(0.0, cos(12 * angle + 0.16)) ** 18 * 5.5
-        rays += max(0.0, cos(20 * angle - 0.28)) ** 24 * 2.5
-
-        if r < 15.2:
-            # Nearly black lunar silhouette, with a subtle warm rim.
-            edge = max(0.0, (r - 12.8) / 2.4)
-            rgba = (round(7 + 18 * edge), round(8 + 5 * edge), round(15 + 2 * edge), 255)
-        elif r < 17.1:
-            rgba = (255, 219, 142, 255)
-        elif r < 19.2:
-            rgba = (255, 159, 58, round(225 - (r - 17.1) * 43))
+        # Chebyshev distance keeps the shadow, corona, and glow square.
+        square_radius = max(abs(x - MID), abs(y - MID))
+        if square_radius < 8.0:
+            rgba = (8, 9, 15, 255)
+        elif square_radius < 9.0:
+            rgba = (255, 231, 166, 255)
+        elif square_radius < 10.0:
+            rgba = (255, 178, 74, 240)
         else:
-            reach = 24.0 + rays
-            if r > reach:
-                rgba = (0, 0, 0, 0)
-            else:
-                fade = exp(-(r - 19.2) / 3.3)
-                taper = min(1.0, max(0.0, (reach - r) / 2.1))
-                alpha = round(170 * fade * taper)
-                rgba = (255, 137, 42, alpha)
+            alpha = round(175 * exp(-(square_radius - 9.5) / 2.2))
+            rgba = (255, 153, 59, alpha)
 
         pixels.extend(rgba)
 
