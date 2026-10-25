@@ -1,0 +1,14 @@
+{
+  "message.ciclos_celestiais.eclipse_start": "Um eclipse solar começou!",
+  "message.ciclos_celestiais.blood_moon_start": "A Lua de Sangue está subindo...",
+  "message.ciclos_celestiais.end": "O céu voltou ao normal.",
+  "message.ciclos_celestiais.no_sleep": "Você não consegue dormir durante a Lua de Sangue.",
+  "command.ciclos_celestiais.eclipse": "Eclipse forçado.",
+  "command.ciclos_celestiais.blood_moon": "Lua de Sangue forçada.",
+  "command.ciclos_celestiais.off": "Eventos desativados temporariamente.",
+  "command.ciclos_celestiais.auto": "Ciclo automático restaurado.",
+  "command.ciclos_celestiais.status": "Evento atual: %s",
+  "event.ciclos_celestiais.none": "nenhum",
+  "event.ciclos_celestiais.solar_eclipse": "eclipse solar",
+  "event.ciclos_celestiais.blood_moon": "Lua de Sangue"
+}

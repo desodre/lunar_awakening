@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "ciclos_celestiais",
+  "version": "${version}",
+  "name": "Ciclos Celestiais",
+  "description": "Eclipses solares e luas de sangue no Overworld.",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      { "adapter": "kotlin", "value": "com.cicloscelestiais.CelestialCycles" }
+    ],
+    "client": [
+      { "adapter": "kotlin", "value": "com.cicloscelestiais.client.CelestialCyclesClient" }
+    ]
+  },
+  "mixins": [
+    "ciclos_celestiais.mixins.json",
+    { "config": "ciclos_celestiais.client.mixins.json", "environment": "client" }
+  ],
+  "depends": {
+    "fabricloader": ">=0.20.1",
+    "minecraft": "~26.3",
+    "java": ">=25",
+    "fabric-api": "*",
+    "fabric-language-kotlin": ">=1.14.2"
+  }
+}

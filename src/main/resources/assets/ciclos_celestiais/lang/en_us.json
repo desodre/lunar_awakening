@@ -1,0 +1,14 @@
+{
+  "message.ciclos_celestiais.eclipse_start": "A solar eclipse has begun!",
+  "message.ciclos_celestiais.blood_moon_start": "The Blood Moon is rising...",
+  "message.ciclos_celestiais.end": "The sky has returned to normal.",
+  "message.ciclos_celestiais.no_sleep": "You cannot sleep during a Blood Moon.",
+  "command.ciclos_celestiais.eclipse": "Solar eclipse forced.",
+  "command.ciclos_celestiais.blood_moon": "Blood Moon forced.",
+  "command.ciclos_celestiais.off": "Events temporarily disabled.",
+  "command.ciclos_celestiais.auto": "Automatic cycle restored.",
+  "command.ciclos_celestiais.status": "Current event: %s",
+  "event.ciclos_celestiais.none": "none",
+  "event.ciclos_celestiais.solar_eclipse": "solar eclipse",
+  "event.ciclos_celestiais.blood_moon": "Blood Moon"
+}
