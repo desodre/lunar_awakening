@@ -1,0 +1,14 @@
+{
+  "message.lunar_awakening.eclipse_start": "A solar eclipse has begun!",
+  "message.lunar_awakening.blood_moon_start": "The Blood Moon is rising...",
+  "message.lunar_awakening.end": "The sky has returned to normal.",
+  "message.lunar_awakening.no_sleep": "You cannot sleep during a Blood Moon.",
+  "command.lunar_awakening.eclipse": "Solar eclipse forced; time set to day. Use /lunar_awakening auto to resume the natural cycle.",
+  "command.lunar_awakening.blood_moon": "Blood Moon forced; time set to night.",
+  "command.lunar_awakening.off": "Events temporarily disabled.",
+  "command.lunar_awakening.auto": "Automatic cycle restored.",
+  "command.lunar_awakening.status": "Current event: %s",
+  "event.lunar_awakening.none": "none",
+  "event.lunar_awakening.solar_eclipse": "solar eclipse",
+  "event.lunar_awakening.blood_moon": "Blood Moon"
+}

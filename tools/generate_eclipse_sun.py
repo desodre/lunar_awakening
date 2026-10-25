@@ -9,7 +9,7 @@ SIZE = 32
 MID = (SIZE - 1) / 2
 OUTPUT = (
     Path(__file__).resolve().parents[1]
-    / "src/client/resources/assets/ciclos_celestiais/textures/environment/celestial/eclipse_sun.png"
+    / "src/client/resources/assets/lunar_awakening/textures/environment/celestial/eclipse_sun.png"
 )
 
 

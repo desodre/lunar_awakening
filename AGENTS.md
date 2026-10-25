@@ -1,4 +1,4 @@
-# Guia do projeto: Ciclos Celestiais
+# Guia do projeto: Lunar Awakening
 
 Este arquivo orienta quem desenvolver o mod em `/home/desodre/Projects/lunar_awake`. Leia também `README.md`, `gradle.properties` e `fabric.mod.json` antes de alterar código. A versão efetiva das dependências está em `gradle.properties`; não substitua essas versões por valores encontrados em páginas genéricas sem conferir compatibilidade.
 
@@ -21,7 +21,7 @@ Este arquivo orienta quem desenvolver o mod em `/home/desodre/Projects/lunar_awa
 | Kotlin | [Fabric Language Kotlin](https://github.com/FabricMC/fabric-language-kotlin/blob/master/README.md) | Dependência e adapter `kotlin` nos entrypoints. |
 | Hooks de jogo | [Fabric Events](https://docs.fabricmc.net/develop/events/) | Preferir eventos oficiais quando eles cobrem o caso. |
 | Cliente/servidor | [Networking](https://docs.fabricmc.net/develop/networking) | Enviar o evento ativo do servidor para a renderização cliente. |
-| Comandos | [Commands](https://docs.fabricmc.net/develop/commands/basics) | Comandos de teste `/celestialcycles`. |
+| Comandos | [Commands](https://docs.fabricmc.net/develop/commands/basics) | Comandos de teste `/lunar_awakening`. |
 | Renderização | [Rendering: Basic Concepts](https://docs.fabricmc.net/develop/rendering/basic-concepts) | Alteração visual do céu no cliente. |
 | Testes de jogo | [Automated Testing](https://docs.fabricmc.net/develop/automatic-testing) | Testes que entram em um mundo e executam ticks. |
 | Mixins | [SpongePowered Mixin: The Mixin Environment](https://github.com/SpongePowered/Mixin/wiki/Introduction-to-Mixins---The-Mixin-Environment) | Pacotes, carregamento e limites de mixins. |
@@ -29,14 +29,14 @@ Este arquivo orienta quem desenvolver o mod em `/home/desodre/Projects/lunar_awa
 
 ## Mapa do código
 
-- `src/main/kotlin/com/cicloscelestiais/CycleEventManager.kt`: sorteio determinístico por semente e dia, ciclo e evento atual no Overworld. Eclipses têm 5% de chance por dia; Luas de Sangue, 10% por noite.
-- `CelestialCycles.kt`: inicialização, callbacks de tick e regra de sono. `CelestialCommands.kt`: comandos para forçar eventos e consultar estado. Estados forçados são temporários e terminam ao reiniciar.
+- `src/main/kotlin/com/lunarawakening/CycleEventManager.kt`: sorteio determinístico por semente e dia, ciclo e evento atual no Overworld. Eclipses têm 5% de chance por dia; Luas de Sangue, 10% por noite.
+- `LunarAwakening.kt`: inicialização, callbacks de tick e regra de sono. `LunarCommands.kt`: comandos para forçar eventos e consultar estado. Estados forçados são temporários e terminam ao reiniciar.
 - `EventNetworking.kt`, `EventSyncPayload.java` e `EventStateBridge.kt`: sincronização servidor → cliente. Mesmo no modo de um jogador, trate servidor lógico e cliente como lados distintos.
-- `src/main/java/com/cicloscelestiais/mixin/`: somente classes anotadas como mixins. Interceptam luz/combustão solar e o limite de spawn de monstros. Configuração em `src/main/resources/ciclos_celestiais.mixins.json`.
-- `src/main/java/com/cicloscelestiais/spawn/`: interface e contexto auxiliares de spawn; **não** mover para `mixin/`.
-- `src/client/java/com/cicloscelestiais/client/mixin/SkyRendererMixin.java`: cor do céu, Lua vermelha e seleção do sprite de eclipse. O sprite está em `src/client/resources/assets/ciclos_celestiais/textures/environment/celestial/eclipse_sun.png`, pode ser regenerado com `python3 tools/generate_eclipse_sun.py` e é adicionado ao atlas por `src/client/resources/assets/minecraft/atlases/celestials.json`. Configuração do mixin em `src/client/resources/ciclos_celestiais.client.mixins.json`.
-- `src/client/java/com/cicloscelestiais/client/mixin/AtmosphericFogEnvironmentMixin.java`: cor do nevoeiro atmosférico e do horizonte durante eclipse e Lua de Sangue. Atua só no Overworld; preserve as cores de água, lava e outros ambientes especiais.
-- `CelestialCommands.kt`: `eclipse` e `bloodmoon` movem o relógio do Overworld para os marcadores oficiais `DAY`/`NIGHT` antes de forçar o evento. `off` e `auto` preservam o horário; todos os comandos atuam no Overworld.
+- `src/main/java/com/lunarawakening/mixin/`: somente classes anotadas como mixins. Interceptam luz/combustão solar e o limite de spawn de monstros. Configuração em `src/main/resources/lunar_awakening.mixins.json`.
+- `src/main/java/com/lunarawakening/spawn/`: interface e contexto auxiliares de spawn; **não** mover para `mixin/`.
+- `src/client/java/com/lunarawakening/client/mixin/SkyRendererMixin.java`: cor do céu, Lua vermelha e seleção do sprite de eclipse. O sprite está em `src/client/resources/assets/lunar_awakening/textures/environment/celestial/eclipse_sun.png`, pode ser regenerado com `python3 tools/generate_eclipse_sun.py` e é adicionado ao atlas por `src/client/resources/assets/minecraft/atlases/celestials.json`. Configuração do mixin em `src/client/resources/lunar_awakening.client.mixins.json`.
+- `src/client/java/com/lunarawakening/client/mixin/AtmosphericFogEnvironmentMixin.java`: cor do nevoeiro atmosférico e do horizonte durante eclipse e Lua de Sangue. Atua só no Overworld; preserve as cores de água, lava e outros ambientes especiais.
+- `LunarCommands.kt`: `eclipse` e `bloodmoon` movem o relógio do Overworld para os marcadores oficiais `DAY`/`NIGHT` antes de forçar o evento. `off` e `auto` preservam o horário; todos os comandos atuam no Overworld.
 - `src/main/resources/fabric.mod.json`: ID, dependências, entrypoints e configurações de mixins.
 
 ## Regras de implementação
@@ -55,11 +55,11 @@ Este arquivo orienta quem desenvolver o mod em `/home/desodre/Projects/lunar_awa
 1. Execute `./gradlew clean build` com JDK 25. O JAR instalável fica em `build/libs/`.
 2. Antes de distribuir uma mudança de mixin, carregue **um mundo jogável e avance ticks** com o JAR final instalado; compilar ou apenas iniciar até a tela/EULA não detecta todos os erros de classloader e injeção. Se não for possível fazer esse teste, declare essa limitação na entrega.
 3. Confira `jar tf build/libs/<arquivo>.jar`: as classes auxiliares devem estar fora dos pacotes `mixin`, e as classes mixin e respectivos JSONs devem estar presentes.
-4. Teste no Overworld os comandos `/celestialcycles eclipse`, `bloodmoon`, `off`, `auto` e `status`; confirme céu, luz, sono, combustão solar e spawn em cliente e servidor quando a alteração envolver essas áreas.
+4. Teste no Overworld os comandos `/lunar_awakening eclipse`, `bloodmoon`, `off`, `auto` e `status`; confirme céu, luz, sono, combustão solar e spawn em cliente e servidor quando a alteração envolver essas áreas.
 5. Atualize `dist/` somente com o JAR da versão atual e, se necessário, o ZIP do código. Não entregue versões antigas junto da atual. Arquivos `.gradle/`, `.kotlin/`, `build/`, `run/` e caches locais não entram no ZIP nem no Git.
 6. Ao investigar um crash, identifique a primeira exceção relevante, a classe e a fase (carregamento, entrada no mundo, tick ou render), então confira versão, pacote, configuração de mixins e causa encadeada antes de alterar código.
 
 ## Estado conhecido
 
 - A versão 0.1.1 corrige o `IllegalClassLoadError` causado pelas classes auxiliares dentro do pacote de mixins na versão 0.1.0.
-- `./gradlew clean build` passou para 0.1.5. A versão 0.1.4 diminui o eclipse e ajusta o horizonte dos dois eventos. A 0.1.5 distribui o início dos eclipses naturais pelo dia e limita sua duração a 2.400 ticks. Ainda falta conferir a aparência em um mundo jogável.
+- `./gradlew clean build` passou para 0.1.6. A versão 0.1.4 diminui o eclipse e ajusta o horizonte dos dois eventos. A 0.1.5 distribui o início dos eclipses naturais pelo dia e limita sua duração a 2.400 ticks. A 0.1.6 renomeia ID, pacotes, recursos e comandos para `lunar_awakening`. Ainda falta conferir a aparência em um mundo jogável.

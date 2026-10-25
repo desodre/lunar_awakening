@@ -1,21 +1,21 @@
 {
   "schemaVersion": 1,
-  "id": "ciclos_celestiais",
+  "id": "lunar_awakening",
   "version": "${version}",
-  "name": "Ciclos Celestiais",
+  "name": "Lunar Awakening",
   "description": "Eclipses solares em horários variados do dia e luas de sangue no Overworld.",
   "environment": "*",
   "entrypoints": {
     "main": [
-      { "adapter": "kotlin", "value": "com.cicloscelestiais.CelestialCycles" }
+      { "adapter": "kotlin", "value": "com.lunarawakening.LunarAwakening" }
     ],
     "client": [
-      { "adapter": "kotlin", "value": "com.cicloscelestiais.client.CelestialCyclesClient" }
+      { "adapter": "kotlin", "value": "com.lunarawakening.client.LunarAwakeningClient" }
     ]
   },
   "mixins": [
-    "ciclos_celestiais.mixins.json",
-    { "config": "ciclos_celestiais.client.mixins.json", "environment": "client" }
+    "lunar_awakening.mixins.json",
+    { "config": "lunar_awakening.client.mixins.json", "environment": "client" }
   ],
   "depends": {
     "fabricloader": ">=0.20.1",

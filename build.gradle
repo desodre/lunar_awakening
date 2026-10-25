@@ -4,14 +4,14 @@ plugins {
 }
 
 base {
-    archivesName = 'ciclos-celestiais'
+    archivesName = 'lunar_awakening'
 }
 
 loom {
     splitEnvironmentSourceSets()
 
     mods {
-        'ciclos_celestiais' {
+        'lunar_awakening' {
             sourceSet sourceSets.main
             sourceSet sourceSets.client
         }

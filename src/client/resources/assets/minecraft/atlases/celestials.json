@@ -2,8 +2,8 @@
   "sources": [
     {
       "type": "minecraft:single",
-      "resource": "ciclos_celestiais:environment/celestial/eclipse_sun",
-      "sprite": "ciclos_celestiais:eclipse_sun"
+      "resource": "lunar_awakening:environment/celestial/eclipse_sun",
+      "sprite": "lunar_awakening:eclipse_sun"
     }
   ]
 }

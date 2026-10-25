@@ -1,7 +1,0 @@
-{
-  "required": true,
-  "package": "com.cicloscelestiais.client.mixin",
-  "compatibilityLevel": "JAVA_25",
-  "client": ["SkyRendererMixin", "AtmosphericFogEnvironmentMixin"],
-  "injectors": { "defaultRequire": 1 }
-}
