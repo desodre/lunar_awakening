@@ -1,6 +1,5 @@
 """Draw a square solar eclipse matching Minecraft's square sun silhouette."""
 
-from math import exp
 from pathlib import Path
 from struct import pack
 from zlib import compress, crc32
@@ -24,15 +23,18 @@ for y in range(SIZE):
     for x in range(SIZE):
         # Chebyshev distance keeps the shadow, corona, and glow square.
         square_radius = max(abs(x - MID), abs(y - MID))
-        if square_radius < 8.0:
+        if square_radius < 7.0:
             rgba = (8, 9, 15, 255)
-        elif square_radius < 9.0:
+        elif square_radius < 8.0:
             rgba = (255, 231, 166, 255)
-        elif square_radius < 10.0:
+        elif square_radius < 9.0:
             rgba = (255, 178, 74, 240)
-        else:
-            alpha = round(175 * exp(-(square_radius - 9.5) / 2.2))
+        elif square_radius < 13.5:
+            fade = (13.5 - square_radius) / 4.5
+            alpha = round(150 * fade**1.5)
             rgba = (255, 153, 59, alpha)
+        else:
+            rgba = (0, 0, 0, 0)
 
         pixels.extend(rgba)
 

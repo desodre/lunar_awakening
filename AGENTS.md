@@ -35,6 +35,7 @@ Este arquivo orienta quem desenvolver o mod em `/home/desodre/Projects/lunar_awa
 - `src/main/java/com/cicloscelestiais/mixin/`: somente classes anotadas como mixins. Interceptam luz/combustão solar e o limite de spawn de monstros. Configuração em `src/main/resources/ciclos_celestiais.mixins.json`.
 - `src/main/java/com/cicloscelestiais/spawn/`: interface e contexto auxiliares de spawn; **não** mover para `mixin/`.
 - `src/client/java/com/cicloscelestiais/client/mixin/SkyRendererMixin.java`: cor do céu, Lua vermelha e seleção do sprite de eclipse. O sprite está em `src/client/resources/assets/ciclos_celestiais/textures/environment/celestial/eclipse_sun.png`, pode ser regenerado com `python3 tools/generate_eclipse_sun.py` e é adicionado ao atlas por `src/client/resources/assets/minecraft/atlases/celestials.json`. Configuração do mixin em `src/client/resources/ciclos_celestiais.client.mixins.json`.
+- `src/client/java/com/cicloscelestiais/client/mixin/AtmosphericFogEnvironmentMixin.java`: cor do nevoeiro atmosférico e do horizonte durante eclipse e Lua de Sangue. Atua só no Overworld; preserve as cores de água, lava e outros ambientes especiais.
 - `CelestialCommands.kt`: `eclipse` e `bloodmoon` movem o relógio do Overworld para os marcadores oficiais `DAY`/`NIGHT` antes de forçar o evento. `off` e `auto` preservam o horário; todos os comandos atuam no Overworld.
 - `src/main/resources/fabric.mod.json`: ID, dependências, entrypoints e configurações de mixins.
 
@@ -47,6 +48,7 @@ Este arquivo orienta quem desenvolver o mod em `/home/desodre/Projects/lunar_awa
 5. O aumento de 25% aplica-se ao **limite global e local** de `MONSTER`: 70 → 88 com arredondamento. Não descreva isso como garantia de 25% mais criaturas geradas; o resultado depende das demais regras de spawn.
 6. Atualize `README.md`, textos `pt_br.json` e `en_us.json`, metadados e versão sempre que uma mudança visível para o jogador os afetar.
 7. Preserve a silhueta **quadrada** do Sol durante o eclipse. O sprite e a sombra central devem ter bordas retas e cantos quadrados, como o Sol original do Minecraft; não substitua por um disco ou coroa circular.
+8. Ao alterar a cor do céu durante qualquer evento, mantenha céu e horizonte atmosférico em tons coerentes. `SkyRenderState.skyColor` sozinho não altera o horizonte, que recebe a cor do nevoeiro atmosférico. Durante os eventos, suprima também a cor vanilla de amanhecer/pôr do sol.
 
 ## Verificação e entrega
 
@@ -60,4 +62,4 @@ Este arquivo orienta quem desenvolver o mod em `/home/desodre/Projects/lunar_awa
 ## Estado conhecido
 
 - A versão 0.1.1 corrige o `IllegalClassLoadError` causado pelas classes auxiliares dentro do pacote de mixins na versão 0.1.0.
-- `./gradlew clean build` passou para 0.1.3. Essa versão mantém o Sol quadrado durante o eclipse. Ainda falta verificar visualmente os astros e os comandos em um mundo jogável.
+- `./gradlew clean build` passou para 0.1.4. Essa versão diminui o eclipse e ajusta o horizonte dos dois eventos. Ainda falta conferir a aparência em um mundo jogável.

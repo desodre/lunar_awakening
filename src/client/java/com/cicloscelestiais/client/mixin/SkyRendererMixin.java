@@ -50,9 +50,11 @@ public abstract class SkyRendererMixin {
                                      SkyRenderState state, CallbackInfo ci) {
         if (level.dimension() != Level.OVERWORLD) return;
         if (EventStateBridge.clientEvent == CelestialEvent.BLOOD_MOON) {
-            state.skyColor = new Vector3f(0.45f, 0.05f, 0.05f);
+            state.skyColor = new Vector3f(0.34f, 0.035f, 0.04f);
+            state.sunriseAndSunsetColor = new Vector4f(0.0f, 0.0f, 0.0f, 0.0f);
         } else if (EventStateBridge.clientEvent == CelestialEvent.SOLAR_ECLIPSE) {
-            state.skyColor = new Vector3f(0.05f, 0.05f, 0.10f);
+            state.skyColor = new Vector3f(0.025f, 0.025f, 0.05f);
+            state.sunriseAndSunsetColor = new Vector4f(0.0f, 0.0f, 0.0f, 0.0f);
         }
     }
 
