@@ -62,4 +62,4 @@ Este arquivo orienta quem desenvolver o mod em `/home/desodre/Projects/lunar_awa
 ## Estado conhecido
 
 - A versão 0.1.1 corrige o `IllegalClassLoadError` causado pelas classes auxiliares dentro do pacote de mixins na versão 0.1.0.
-- `./gradlew clean build` passou para 0.1.4. Essa versão diminui o eclipse e ajusta o horizonte dos dois eventos. Ainda falta conferir a aparência em um mundo jogável.
+- `./gradlew clean build` passou para 0.1.5. A versão 0.1.4 diminui o eclipse e ajusta o horizonte dos dois eventos. A 0.1.5 distribui o início dos eclipses naturais pelo dia e limita sua duração a 2.400 ticks. Ainda falta conferir a aparência em um mundo jogável.

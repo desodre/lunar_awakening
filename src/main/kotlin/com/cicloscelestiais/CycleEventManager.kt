@@ -10,6 +10,7 @@ import java.util.WeakHashMap
 object CycleEventManager {
     private const val DAY_TICKS = 24_000L
     private const val NIGHT_START = 12_000L
+    private const val ECLIPSE_DURATION = 2_400L
     private const val ECLIPSE_CHANCE = 0.05
     private const val BLOOD_MOON_CHANCE = 0.10
 
@@ -19,8 +20,8 @@ object CycleEventManager {
 
     private data class Decision(
         val day: Long,
-        val daytime: Boolean,
-        val event: CelestialEvent
+        val eclipseStart: Long?,
+        val bloodMoon: Boolean
     )
 
     @JvmStatic
@@ -31,21 +32,25 @@ object CycleEventManager {
         val clock = level.getOverworldClockTime()
         val day = Math.floorDiv(clock, DAY_TICKS)
         val phase = Math.floorMod(clock, DAY_TICKS)
-        val daytime = phase < NIGHT_START
-        decisions[level]?.let { cached ->
-            if (cached.day == day && cached.daytime == daytime) return cached.event
+        val decision = decisions[level]?.takeIf { it.day == day } ?: run {
+            val eclipseRandom = SplittableRandom(level.seed xor (day * -7046029254386353131L) xor 0x15E1C5EL)
+            val eclipseStart = if (eclipseRandom.nextDouble() < ECLIPSE_CHANCE) {
+                eclipseRandom.nextLong(NIGHT_START - ECLIPSE_DURATION + 1)
+            } else {
+                null
+            }
+            val bloodMoonRandom = SplittableRandom(level.seed xor (day * -7046029254386353131L) xor 0xB100D00DL)
+            Decision(day, eclipseStart, bloodMoonRandom.nextDouble() < BLOOD_MOON_CHANCE)
+                .also { decisions[level] = it }
         }
 
-        val chance = if (daytime) ECLIPSE_CHANCE else BLOOD_MOON_CHANCE
-        val salt = if (daytime) 0x15E1C5EL else 0xB100D00DL
-        val random = SplittableRandom(level.seed xor (day * -7046029254386353131L) xor salt)
-        val event = if (random.nextDouble() < chance) {
-            if (daytime) CelestialEvent.SOLAR_ECLIPSE else CelestialEvent.BLOOD_MOON
+        return if (phase < NIGHT_START) {
+            if (decision.eclipseStart != null &&
+                phase >= decision.eclipseStart && phase < decision.eclipseStart + ECLIPSE_DURATION
+            ) CelestialEvent.SOLAR_ECLIPSE else CelestialEvent.NONE
         } else {
-            CelestialEvent.NONE
+            if (decision.bloodMoon) CelestialEvent.BLOOD_MOON else CelestialEvent.NONE
         }
-        decisions[level] = Decision(day, daytime, event)
-        return event
     }
 
     fun force(level: ServerLevel, event: CelestialEvent?) {

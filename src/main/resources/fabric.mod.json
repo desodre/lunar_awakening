@@ -3,7 +3,7 @@
   "id": "ciclos_celestiais",
   "version": "${version}",
   "name": "Ciclos Celestiais",
-  "description": "Eclipses solares e luas de sangue no Overworld.",
+  "description": "Eclipses solares em horários variados do dia e luas de sangue no Overworld.",
   "environment": "*",
   "entrypoints": {
     "main": [
