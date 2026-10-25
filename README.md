@@ -33,3 +33,7 @@ Com permissão de operador, use:
 O projeto compila com Fabric 26.3. A versão 0.1.1 corrigiu o crash de carregamento do mixin; a 0.1.2 acrescentou os astros personalizados e o ajuste de horário; a 0.1.3 preservou o Sol quadrado. A 0.1.4 reduziu o tamanho aparente do eclipse e ajustou o horizonte dos dois eventos. A 0.1.5 permite eclipses naturais em horários variados do dia. A 0.1.6 renomeia o mod para `lunar_awakening`, inclusive o ID do Fabric e o comando. Remova a versão antiga ao instalar esta. O JAR pré-compilado está em `dist/`. Ainda é necessário validar os efeitos visualmente e medir spawns dentro de um mundo jogável.
 
 Baseado no [template oficial do Fabric](https://github.com/FabricMC/fabric-example-mod/tree/26.3), disponibilizado em CC0.
+
+## Licença
+
+O projeto é distribuído sob a [licença MIT](LICENSE).

@@ -4,6 +4,7 @@
   "version": "${version}",
   "name": "Lunar Awakening",
   "description": "Eclipses solares em horários variados do dia e luas de sangue no Overworld.",
+  "license": "MIT",
   "environment": "*",
   "entrypoints": {
     "main": [
