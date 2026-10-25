@@ -1,0 +1,9 @@
+{
+  "sources": [
+    {
+      "type": "minecraft:single",
+      "resource": "ciclos_celestiais:environment/celestial/eclipse_sun",
+      "sprite": "ciclos_celestiais:eclipse_sun"
+    }
+  ]
+}

@@ -34,7 +34,8 @@ Este arquivo orienta quem desenvolver o mod em `/home/desodre/Projects/lunar_awa
 - `EventNetworking.kt`, `EventSyncPayload.java` e `EventStateBridge.kt`: sincronização servidor → cliente. Mesmo no modo de um jogador, trate servidor lógico e cliente como lados distintos.
 - `src/main/java/com/cicloscelestiais/mixin/`: somente classes anotadas como mixins. Interceptam luz/combustão solar e o limite de spawn de monstros. Configuração em `src/main/resources/ciclos_celestiais.mixins.json`.
 - `src/main/java/com/cicloscelestiais/spawn/`: interface e contexto auxiliares de spawn; **não** mover para `mixin/`.
-- `src/client/java/com/cicloscelestiais/client/mixin/SkyRendererMixin.java`: visual do céu. Configuração em `src/client/resources/ciclos_celestiais.client.mixins.json`.
+- `src/client/java/com/cicloscelestiais/client/mixin/SkyRendererMixin.java`: cor do céu, Lua vermelha e seleção do sprite de eclipse. O sprite está em `src/client/resources/assets/ciclos_celestiais/textures/environment/celestial/eclipse_sun.png`, pode ser regenerado com `python3 tools/generate_eclipse_sun.py` e é adicionado ao atlas por `src/client/resources/assets/minecraft/atlases/celestials.json`. Configuração do mixin em `src/client/resources/ciclos_celestiais.client.mixins.json`.
+- `CelestialCommands.kt`: `eclipse` e `bloodmoon` movem o relógio do Overworld para os marcadores oficiais `DAY`/`NIGHT` antes de forçar o evento. `off` e `auto` preservam o horário; todos os comandos atuam no Overworld.
 - `src/main/resources/fabric.mod.json`: ID, dependências, entrypoints e configurações de mixins.
 
 ## Regras de implementação
@@ -58,4 +59,4 @@ Este arquivo orienta quem desenvolver o mod em `/home/desodre/Projects/lunar_awa
 ## Estado conhecido
 
 - A versão 0.1.1 corrige o `IllegalClassLoadError` causado pelas classes auxiliares dentro do pacote de mixins na versão 0.1.0.
-- `./gradlew clean build` passou para 0.1.1. Ainda falta validar o comportamento completo em um mundo jogável; não trate o build como prova de execução no jogo.
+- `./gradlew clean build` passou para 0.1.2. Essa versão acrescenta o Sol eclipsado, a Lua vermelha e o ajuste de horário. Ainda falta verificar visualmente os astros e os comandos em um mundo jogável.
